@@ -11,3 +11,9 @@ describe ('Contact', function() {
     expect(testContact.fullName()).to.equal("Sherlock Holmes");
   });
 });
+
+// describe ('Address', function() {
+//   it ("creates a new address with the given properties", function() {
+//     var testAddress = new Address("")
+//   });
+// });
