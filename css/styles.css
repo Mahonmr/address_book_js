@@ -10,3 +10,9 @@
 .contact:hover {
   text-decoration: underline;
 }
+
+.hover {
+  font-size: 20px;
+  font-weight: bold;
+  color: blue;
+}

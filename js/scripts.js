@@ -8,14 +8,16 @@ Contact.prototype.fullName = function() {
   return this.firstName + " " + this.lastName;
 }
 
-function Address(street, city, state) {
+function Address(street, city, state, type) {
   this.street = street;
   this.city = city;
   this.state = state;
+  this.type = type;
 }
 
+
 Address.prototype.fullAddress = function() {
-  return this.street + ", " + this.city + ", " + this.state;
+  return this.type + ": " + this.street + ", " + this.city + ", " + this.state;
 }
 
 function resetFields() {
@@ -24,6 +26,18 @@ function resetFields() {
     $("input.new-street").val("");
     $("input.new-city").val("");
     $("input.new-state").val("");
+    $("input.new-type").val("");
+    $(".new-address").not("#original-address-field").remove();
+}
+
+function hoverLists() {
+  $("li").hover(
+    function() {
+      $(this).addClass("hover");
+    }, function() {
+      $(this).removeClass("hover");
+    }
+  );
 }
 
 $(document).ready(function() {
@@ -41,6 +55,10 @@ $(document).ready(function() {
                                    '<label for="new-state">State</label>' +
                                    '<input type="text" class="form-control new-state">' +
                                  '</div>' +
+                                 '<div class="form-group">' +
+                                   '<label for="new-type">Address Type</label>' +
+                                   '<input type="text" class="form-control new-type">' +
+                                 '</div>' +
                                '</div>');
   });
 
@@ -55,14 +73,14 @@ $(document).ready(function() {
       var inputtedStreet = $(this).find("input.new-street").val();
       var inputtedCity = $(this).find("input.new-city").val();
       var inputtedState = $(this).find("input.new-state").val();
-      var newAddress = new Address(inputtedStreet, inputtedCity, inputtedState);
+      var inputtedType = $(this).find("input.new-type").val();
+      var newAddress = new Address(inputtedStreet, inputtedCity, inputtedState, inputtedType);
       newContact.addresses.push(newAddress);
     });
 
     $("ul#contacts").append("<li><span class='contact'>" + newContact.fullName() + "</span></li>");
 
     $(".contact").last().click(function() {
-      $("#show-contact").show();
       $("#show-contact h2").text(newContact.fullName());
       $(".first-name").text(newContact.firstName);
       $(".last-name").text(newContact.lastName);
@@ -70,8 +88,12 @@ $(document).ready(function() {
       newContact.addresses.forEach(function(address) {
         $("ul#addresses").append("<li>" + address.fullAddress() + "</li>");
       });
+      $("#show-contact").fadeIn("slow", function() {
+      });
+      hoverLists();
     });
 
+    hoverLists();
     resetFields();
 
   });
